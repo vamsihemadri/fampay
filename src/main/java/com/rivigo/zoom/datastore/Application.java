@@ -1,10 +1,8 @@
 package com.rivigo.zoom.datastore;
 
 import com.rivigo.zoom.datastore.config.WebConfig;
+import com.rivigo.zoom.datastore.service.InitService;
 import java.util.Arrays;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,13 +26,8 @@ public class Application {
     for (String beanName : beanNames) {
       log.debug("Beans initialized by spring boot {}", beanName);
     }
-    Runnable runnable =
-        new Runnable() {
-          public void run() {
-            System.out.println("Hello !!");
-          }
-        };
-    ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-    service.scheduleAtFixedRate(runnable, 10, 10, TimeUnit.SECONDS);
+    final InitService initService = ctx.getBean(InitService.class);
+    initService.initialiseApplication();
+    ;
   }
 }
