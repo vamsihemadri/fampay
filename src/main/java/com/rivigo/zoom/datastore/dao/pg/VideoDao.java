@@ -55,7 +55,7 @@ public interface VideoDao extends AbstractDao<Video> {
           + "youtube_video_id, "
           + "youtube_channel_id, "
           + "channel_name, "
-          + "thumb_nails_metadata, "
+          + "thumb_nails_metadata "
           + "from videos "
           + "where "
           + "id = :id ")
