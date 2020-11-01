@@ -1,0 +1,186 @@
+plugins {
+    id "java"
+    id "idea"
+    id "application"
+    id "jacoco"
+    id "org.springframework.boot" version "2.0.1.RELEASE"
+    id "com.diffplug.gradle.spotless" version "3.25.0"
+    id "org.flywaydb.flyway" version "5.2.4"
+}
+
+//noinspection GroovyUnusedAssignment
+sourceCompatibility = JavaVersion.VERSION_1_8
+//noinspection GroovyUnusedAssignment
+targetCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://repo.spring.io/release" }
+}
+
+//noinspection GroovyUnusedAssignment
+mainClassName = "com.rivigo.zoom.datastore.Application"
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.enabled true
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+    executionData.from = files("build/jacoco/test.exec")
+}
+
+// output details about unchecked and deprecated method calls
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    }
+}
+
+// integration test compile and runtime configurations
+configurations {
+    integrationTestCompile.extendsFrom testCompile
+    integrationTestRuntime.extendsFrom testRuntime
+}
+
+configurations {
+    all*.exclude group: "org.hibernate", module: "hibernate-entitymanager"
+    all*.exclude group: "org.apache.tomcat", module: "tomcat-jdbc"
+}
+
+ext {
+    lombokV = "1.18.4"
+
+    springBootV = "2.0.1.RELEASE"
+
+    micrometerV = "1.1.4"
+
+    jdbiV = "3.1.1"
+
+    postgreV = "42.2.2"
+    hikariV = "3.1.0"
+
+    jacksonV = "2.9.5"
+    commonsLang3V = "3.8.1"
+
+    swaggerV = "2.8.0"
+
+    validationV = "2.0.1.Final"
+
+    utilsV = "1.0.2"
+
+    junitV = "4.12"
+    elasticV = "6.2.4"
+    flywayV = "5.0.7"
+    testcontainersV = "1.10.6"
+    apacheCommonsV ="1.3.2"
+}
+
+dependencies {
+
+    compile "org.projectlombok:lombok:${lombokV}"   // compile to put it in lib dir for sonar
+    annotationProcessor "org.projectlombok:lombok:${lombokV}"
+
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootV}"
+    implementation "org.springframework.boot:spring-boot-starter-tomcat:${springBootV}"
+    implementation "org.springframework.boot:spring-boot-configuration-processor:${springBootV}"
+    implementation "org.springframework.boot:spring-boot-starter-actuator:${springBootV}"
+    implementation "org.springframework.boot:spring-boot-starter-jdbc:${springBootV}"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootV}"
+    implementation "org.springframework.cloud:spring-cloud-starter-sleuth:${springBootV}"
+
+    implementation "io.micrometer:micrometer-core:${micrometerV}"
+    implementation "io.micrometer:micrometer-registry-prometheus:${micrometerV}"
+
+    implementation "org.jdbi:jdbi3-core:${jdbiV}"
+    compile "org.jdbi:jdbi3-postgres:${jdbiV}"
+    implementation "org.jdbi:jdbi3-sqlobject:${jdbiV}"
+
+    implementation "org.postgresql:postgresql:${postgreV}"
+    implementation "com.zaxxer:HikariCP:${hikariV}"
+
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonV}"
+    implementation "com.fasterxml.jackson.module:jackson-modules-java8:${jacksonV}"
+    implementation "org.apache.commons:commons-lang3:${commonsLang3V}"
+
+    implementation "io.springfox:springfox-swagger2:${swaggerV}"
+    implementation "io.springfox:springfox-swagger-ui:${swaggerV}"
+
+    implementation "javax.validation:validation-api:${validationV}"
+
+    implementation "org.apache.commons:commons-io:${apacheCommonsV}"
+
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokV}"
+
+    testImplementation "junit:junit:${junitV}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootV}"
+    testImplementation "org.flywaydb:flyway-core:${flywayV}"
+    testImplementation "org.testcontainers:testcontainers:${testcontainersV}"
+    testImplementation "org.testcontainers:postgresql:${testcontainersV}"
+    testImplementation "org.testcontainers:elasticsearch:${testcontainersV}"
+    implementation 'javax.xml.bind:jaxb-api:2.3.0'
+    implementation 'javax.activation:activation:1.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.0'
+    testImplementation "net.bytebuddy:byte-buddy:1.8.22"
+    testImplementation "net.bytebuddy:byte-buddy-agent:1.8.22"
+}
+
+jacoco {
+    toolVersion = "0.8.3"
+    reportsDir = file("$buildDir/reports/jacoco")
+}
+
+test {
+    testLogging.showStandardStreams = true
+}
+
+spotless {
+    java {
+        googleJavaFormat('1.6')
+//         optional: you can specify a specific version and/or switch to AOSP style
+//        googleJavaFormat('1.1').aosp()
+//         you can then layer other format steps, such as
+//        licenseHeaderFile 'spotless.license.java'
+    }
+}
+
+tasks.create(name: 'gitExecutableHooks') {
+    doLast {
+        Runtime.getRuntime().exec("chmod -R +x .git/hooks/")
+    }
+}
+
+task installGitHooks(type: Copy) {
+    from ".git-hooks/src/hooks/pre-push/gradle/pre-push", ".git-hooks/src/hooks/pre-commit/commit-msg"
+    into ".git/hooks"
+}
+
+task copyToLib(type: Copy) {
+    into "$buildDir/lib"
+    from configurations.runtime
+}
+
+wrapper {
+    gradleVersion = '6.0.1'
+    distributionUrl = distributionUrl.replace("bin", "all")
+}
+
+assembleBootDist.enabled = false
+installBootDist.enabled = false
+assembleDist.enabled = false
+installDist.enabled = false
+bootDistTar.enabled = false
+distTar.enabled = false
+bootDistZip.enabled = false
+distZip.enabled = false
+bootStartScripts.enabled = false
+startScripts.enabled = false
+
+gitExecutableHooks.dependsOn(installGitHooks)
+processResources.dependsOn('spotlessApply')
+processResources.dependsOn(gitExecutableHooks)
+
+test.finalizedBy(jacocoTestReport)
+build.finalizedBy(copyToLib)
