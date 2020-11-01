@@ -2,7 +2,6 @@ package com.rivigo.zoom.datastore.model;
 
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +12,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
 public class Video extends AbstractModel {
 
   @NotBlank private String title;

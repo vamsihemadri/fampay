@@ -10,4 +10,8 @@ public class DateTimeUtils {
     DateTime dateTime = DateTime.parseRfc3339(rfcTime);
     return dateTime.getValue();
   }
+
+  public static String getRFCTImeForEpochMillis(Long millisSinceEpoch) {
+    return null;
+  }
 }

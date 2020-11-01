@@ -18,7 +18,7 @@ public class YoutubeSearchResultToVideoModelConverter {
 
   @Autowired private ObjectMapper objectMapper;
 
-  /* searchresult
+  /* param searchresult
   and searchresult.getSnippet()
   and searchResult.getId() are guaranteed to be non null.
    */

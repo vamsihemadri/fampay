@@ -26,6 +26,8 @@ public class YoutubeConstants {
 
   public static final String YOUTUBE_RFC_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
+  public static final String YOUTUBE_SCHEDULER_NAME = "youtube_video_scheduler";
+
   public String getDeveloperKey() {
     return DEVELOPER_KEY;
   }
