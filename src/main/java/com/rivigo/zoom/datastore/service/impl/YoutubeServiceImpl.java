@@ -17,10 +17,9 @@ import org.springframework.stereotype.Service;
 public class YoutubeServiceImpl implements YoutubeService {
 
   @Override
-  public List<SearchResult> hitYoutubeAndGetResponse(String query) {
+  public List<SearchResult> hitYoutubeAndGetResponse(String query, String lastRunDateTime) {
     // Define and execute the API request
     SearchListResponse response;
-    String lastRunDateTime = null;
     try {
       YouTube youtubeService = getService();
       YouTube.Search.List request =

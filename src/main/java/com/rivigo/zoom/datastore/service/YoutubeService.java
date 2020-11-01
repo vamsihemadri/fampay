@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface YoutubeService {
 
-  List<SearchResult> hitYoutubeAndGetResponse(String query);
+  List<SearchResult> hitYoutubeAndGetResponse(String query, String lastRunDateTime);
 }

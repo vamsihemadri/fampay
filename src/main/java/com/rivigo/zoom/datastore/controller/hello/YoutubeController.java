@@ -1,7 +1,7 @@
 package com.rivigo.zoom.datastore.controller.hello;
 
-import com.google.api.services.youtube.model.SearchResult;
-import com.rivigo.zoom.datastore.service.YoutubeService;
+import com.rivigo.zoom.datastore.facade.YoutubeFacade;
+import com.rivigo.zoom.datastore.model.Video;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/youtube")
 public class YoutubeController {
 
-  @Autowired private YoutubeService youtubeService;
+  @Autowired private YoutubeFacade youtubeFacade;
 
   @GetMapping("/hello")
   public String helloYoutube() {
@@ -21,7 +21,7 @@ public class YoutubeController {
   }
 
   @GetMapping("/videos")
-  public List<SearchResult> getVideos(@RequestParam(required = false) String query) {
-    return youtubeService.hitYoutubeAndGetResponse(query);
+  public List<Video> getVideos(@RequestParam(required = false) String query) {
+    return youtubeFacade.hitYoutubeAndSaveLocally(query);
   }
 }
