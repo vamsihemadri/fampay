@@ -8,10 +8,8 @@ This project is a `gradle` based spring boot application. It uses [JDBI](http://
 
 **Quick Setup:** The project is on docker and can be run with below commands:
 
-* Build docker image: `docker build --rm -t zoom-datastore . [--build-arg key=value]`. The following build-args are supported:
-    * `PROPERTIES_PATH`: path of directory to read *application.properties* and *flyway.properties*. The path must be in the build context. Use tmp directory to copy file(s) which are not in context. Default: src/main/resources
-    
-    
+* Build docker image: `docker build --rm -t zoom-datastore . `. The following build-args are supported:
+            
 * Run docker container: `docker run -p 8080:8080 zoom-datastore` 
 
 **Gradle Wrapper** The project uses gradle wrapper:
