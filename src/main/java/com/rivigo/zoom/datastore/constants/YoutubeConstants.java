@@ -19,6 +19,8 @@ public class YoutubeConstants {
 
   public static final String DATE_KEY = "date";
 
+  public static final String DEFAULT_QUERY = "epl highlights today";
+
   public String getDeveloperKey() {
     return DEVELOPER_KEY;
   }

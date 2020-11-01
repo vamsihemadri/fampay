@@ -28,8 +28,8 @@ public class YoutubeServiceImpl implements YoutubeService {
           request
               .setKey(YoutubeConstants.getDeveloperKey())
               .setOrder(YoutubeConstants.DATE_KEY)
-              .setPublishedAfter("2020-10-01T07:18:21+00:00")
-              .setQ(query)
+              .setPublishedAfter("2020-11-01T07:18:21+00:00")
+              .setQ(query == null ? YoutubeConstants.DEFAULT_QUERY : query)
               .setType(YoutubeConstants.TYPE_VIDEO_LSIT)
               .execute();
     } catch (GeneralSecurityException | IOException i) {

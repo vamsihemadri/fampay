@@ -17,11 +17,11 @@ public class YoutubeController {
 
   @GetMapping("/hello")
   public String helloYoutube() {
-    return "Hello. I will be yout intergace to youtube.";
+    return "Hello. I will be your interface to Youtube API.";
   }
 
   @GetMapping("/videos")
-  public List<SearchResult> getVideos(@RequestParam String query) {
+  public List<SearchResult> getVideos(@RequestParam(required = false) String query) {
     return youtubeService.hitYoutubeAndGetResponse(query);
   }
 }
