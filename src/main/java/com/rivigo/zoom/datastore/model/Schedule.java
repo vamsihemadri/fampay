@@ -17,5 +17,5 @@ public class Schedule extends AbstractModel {
 
   @NotBlank private String name;
 
-  @NonNull private String lastSuccessfulRunRFCTime;
+  @NonNull private String lastSuccessfulRunRfcTime;
 }

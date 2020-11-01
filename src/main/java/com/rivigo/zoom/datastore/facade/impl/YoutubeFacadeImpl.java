@@ -46,6 +46,6 @@ public class YoutubeFacadeImpl implements YoutubeFacade {
 
     return youtubeSchedule == null
         ? YoutubeConstants.DEFAULT_PUBLISHED_AFTER
-        : youtubeSchedule.getLastSuccessfulRunRFCTime();
+        : youtubeSchedule.getLastSuccessfulRunRfcTime();
   }
 }
