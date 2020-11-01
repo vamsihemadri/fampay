@@ -21,6 +21,11 @@ public class YoutubeConstants {
 
   public static final String DEFAULT_QUERY = "epl highlights today";
 
+  public static final Long DEFAULT_MAX_RESULTS = 25L;
+  public static final String DEFAULT_PUBLISHED_AFTER = "2020-10-01T07:18:21+00:00";
+
+  public static final String YOUTUBE_RFC_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+
   public String getDeveloperKey() {
     return DEVELOPER_KEY;
   }

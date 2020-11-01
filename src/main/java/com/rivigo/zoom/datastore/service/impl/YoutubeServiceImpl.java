@@ -20,6 +20,7 @@ public class YoutubeServiceImpl implements YoutubeService {
   public List<SearchResult> hitYoutubeAndGetResponse(String query) {
     // Define and execute the API request
     SearchListResponse response;
+    String lastRunDateTime = null;
     try {
       YouTube youtubeService = getService();
       YouTube.Search.List request =
@@ -28,9 +29,13 @@ public class YoutubeServiceImpl implements YoutubeService {
           request
               .setKey(YoutubeConstants.getDeveloperKey())
               .setOrder(YoutubeConstants.DATE_KEY)
-              .setPublishedAfter("2020-11-01T07:18:21+00:00")
+              .setPublishedAfter(
+                  lastRunDateTime == null
+                      ? YoutubeConstants.DEFAULT_PUBLISHED_AFTER
+                      : lastRunDateTime)
               .setQ(query == null ? YoutubeConstants.DEFAULT_QUERY : query)
               .setType(YoutubeConstants.TYPE_VIDEO_LSIT)
+              .setMaxResults(YoutubeConstants.DEFAULT_MAX_RESULTS)
               .execute();
     } catch (GeneralSecurityException | IOException i) {
       return Collections.emptyList();

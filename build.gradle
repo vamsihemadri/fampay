@@ -82,6 +82,7 @@ dependencies {
 
     compile "org.projectlombok:lombok:${lombokV}"   // compile to put it in lib dir for sonar
     compile 'com.google.apis:google-api-services-youtube:v3-rev20200618-1.30.9'
+    compile group: 'com.google.http-client', name: 'google-http-client', version: '1.27.0'
     annotationProcessor "org.projectlombok:lombok:${lombokV}"
 
     implementation "org.springframework.boot:spring-boot-starter-web:${springBootV}"
