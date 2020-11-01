@@ -11,9 +11,11 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class YoutubeServiceImpl implements YoutubeService {
 
   @Override
@@ -36,7 +38,9 @@ public class YoutubeServiceImpl implements YoutubeService {
               .setType(YoutubeConstants.TYPE_VIDEO_LSIT)
               .setMaxResults(YoutubeConstants.DEFAULT_MAX_RESULTS)
               .execute();
+      log.info("The response from youtube api is {}", response.toString());
     } catch (GeneralSecurityException | IOException i) {
+      log.error("There occurred an exception : {}", (Object) i.getStackTrace());
       return Collections.emptyList();
     }
 

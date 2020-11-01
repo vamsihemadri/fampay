@@ -13,6 +13,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 
   @Autowired private Jdbi readDbiBean;
 
+  @Autowired private Jdbi writeDbiBean;
+
   @Override
   public Schedule getScheduleByName(String name) throws RuntimeException {
     try (Handle handle = readDbiBean.open()) {
@@ -23,6 +25,14 @@ public class ScheduleServiceImpl implements ScheduleService {
               () ->
                   new RuntimeException(
                       (String.format("No schedule found with the name %s", name))));
+    }
+  }
+
+  @Override
+  public Long save(Schedule schedule) {
+    try (Handle handle = writeDbiBean.open()) {
+      SchedulerDao schedulerDao = handle.attach(SchedulerDao.class);
+      return schedulerDao.update(schedule);
     }
   }
 }

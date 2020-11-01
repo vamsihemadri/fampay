@@ -9,6 +9,8 @@ import com.rivigo.zoom.datastore.model.Video;
 import com.rivigo.zoom.datastore.service.ScheduleService;
 import com.rivigo.zoom.datastore.service.VideoService;
 import com.rivigo.zoom.datastore.service.YoutubeService;
+import com.rivigo.zoom.datastore.utils.DateTimeUtils;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,23 +31,34 @@ public class YoutubeFacadeImpl implements YoutubeFacade {
 
   @Override
   public List<Video> hitYoutubeAndSaveLocally(String query) {
-    String lastRun = getLastSuccessFullYoutubeSchedulerRun();
-    List<SearchResult> searchResults = youtubeService.hitYoutubeAndGetResponse(query, lastRun);
-    return videoService.saveAll(
-        youtubeSearchResultToVideoModelConverter.convertYoutubSearchResultList(searchResults));
-    // insert into schedule with this time;
+    Schedule youtubeSchedule = getYoutubeSchedule();
+    List<Video> toReturn = new ArrayList<>();
+    if (youtubeSchedule != null) {
+      // hit youtube api and get video details
+      List<SearchResult> searchResults =
+          youtubeService.hitYoutubeAndGetResponse(
+              query, youtubeSchedule.getLastSuccessfulRunRfcTime());
+      log.info(String.format("The number of search results are %s", searchResults.size()));
+      log.info(String.format("The search results are %s", searchResults.toString()));
+      toReturn =
+          videoService.saveAll(
+              youtubeSearchResultToVideoModelConverter.convertYoutubSearchResultList(
+                  searchResults));
+      // update the youtube schedule.
+      youtubeSchedule.setLastSuccessfulRunRfcTime(
+          DateTimeUtils.getRFCTImeForEpochMillis(System.currentTimeMillis()));
+      scheduleService.save(youtubeSchedule);
+    }
+    return toReturn;
   }
 
-  private String getLastSuccessFullYoutubeSchedulerRun() {
+  private Schedule getYoutubeSchedule() {
     Schedule youtubeSchedule = null;
     try {
       youtubeSchedule = scheduleService.getScheduleByName(YoutubeConstants.YOUTUBE_SCHEDULER_NAME);
     } catch (RuntimeException e) {
       log.error("No schedule found for youtube scheduler.");
     }
-
-    return youtubeSchedule == null
-        ? YoutubeConstants.DEFAULT_PUBLISHED_AFTER
-        : youtubeSchedule.getLastSuccessfulRunRfcTime();
+    return youtubeSchedule;
   }
 }
