@@ -1,6 +1,5 @@
 package com.rivigo.zoom.datastore.service.impl;
 
-import com.rivigo.zoom.datastore.constants.YoutubeConstants;
 import com.rivigo.zoom.datastore.facade.YoutubeFacade;
 import com.rivigo.zoom.datastore.service.InitService;
 import java.util.concurrent.Executors;
@@ -21,7 +20,7 @@ public class InitServiceImpl implements InitService {
     Runnable runnable =
         new Runnable() {
           public void run() {
-            //youtubeFacade.hitYoutubeAndSaveLocally(YoutubeConstants.DEFAULT_QUERY);
+            // youtubeFacade.hitYoutubeAndSaveLocally(YoutubeConstants.DEFAULT_QUERY);
             System.out.println(
                 String.format("Hello i have hit youtube api at {}!!", System.currentTimeMillis()));
           }

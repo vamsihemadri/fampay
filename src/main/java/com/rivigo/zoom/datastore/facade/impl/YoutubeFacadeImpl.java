@@ -1,7 +1,7 @@
 package com.rivigo.zoom.datastore.facade.impl;
 
 import com.google.api.services.youtube.model.SearchResult;
-import com.rivigo.zoom.datastore.constants.YoutubeConstants;
+import com.rivigo.zoom.datastore.constants.FamPayYoutubeConstants;
 import com.rivigo.zoom.datastore.converter.YoutubeSearchResultToVideoModelConverter;
 import com.rivigo.zoom.datastore.facade.YoutubeFacade;
 import com.rivigo.zoom.datastore.model.Schedule;
@@ -55,7 +55,8 @@ public class YoutubeFacadeImpl implements YoutubeFacade {
   private Schedule getYoutubeSchedule() {
     Schedule youtubeSchedule = null;
     try {
-      youtubeSchedule = scheduleService.getScheduleByName(YoutubeConstants.YOUTUBE_SCHEDULER_NAME);
+      youtubeSchedule =
+          scheduleService.getScheduleByName(FamPayYoutubeConstants.YOUTUBE_SCHEDULER_NAME);
     } catch (RuntimeException e) {
       log.error("No schedule found for youtube scheduler.");
     }

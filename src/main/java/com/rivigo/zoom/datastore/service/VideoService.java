@@ -6,4 +6,6 @@ import java.util.List;
 public interface VideoService {
 
   List<Video> saveAll(List<Video> videos);
+
+  List<Video> getVideoDetails(Integer pageNumber, Integer pageSize);
 }

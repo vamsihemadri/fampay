@@ -1,5 +1,6 @@
 package com.rivigo.zoom.datastore.service.impl;
 
+import com.rivigo.zoom.datastore.constants.FamPayYoutubeConstants;
 import com.rivigo.zoom.datastore.dao.pg.VideoDao;
 import com.rivigo.zoom.datastore.model.Video;
 import com.rivigo.zoom.datastore.service.VideoService;
@@ -24,6 +25,20 @@ public class VideoServiceImpl implements VideoService {
       VideoDao videoDao = handle.attach(VideoDao.class);
       return videoDao.saveAll(
           videos.stream().filter(Objects::nonNull).collect(Collectors.toList()));
+    }
+  }
+
+  @Override
+  public List<Video> getVideoDetails(Integer pageNumber, Integer pageSize) {
+    if (pageNumber == null) {
+      pageNumber = FamPayYoutubeConstants.DEFAULT_PAGE_NUMBER;
+    }
+    if (pageSize == null) {
+      pageSize = FamPayYoutubeConstants.DEFAULT_PAGE_SIZE;
+    }
+    try (Handle handle = readDbiBean.open()) {
+      VideoDao videoDao = handle.attach(VideoDao.class);
+      return videoDao.getByPageNumberAndPageSize(pageNumber, pageSize);
     }
   }
 }

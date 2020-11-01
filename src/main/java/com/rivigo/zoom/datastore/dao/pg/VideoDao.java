@@ -1,6 +1,7 @@
 package com.rivigo.zoom.datastore.dao.pg;
 
 import com.rivigo.zoom.datastore.model.Video;
+import java.util.List;
 import java.util.Optional;
 import org.jdbi.v3.sqlobject.config.RegisterFieldMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -60,4 +61,11 @@ public interface VideoDao extends AbstractDao<Video> {
           + "where "
           + "id = :id ")
   Optional<Video> findById(@Bind("id") Long id);
+
+  @SqlQuery()
+  /*
+  here pageNumber and pageSize are guaranteed to be non null;
+   */
+  List<Video> getByPageNumberAndPageSize(
+      @BindBean("pageNumber") Integer pageNumber, @BindBean("pageSize") Integer pageSize);
 }

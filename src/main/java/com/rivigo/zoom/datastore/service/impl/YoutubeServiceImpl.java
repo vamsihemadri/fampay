@@ -5,7 +5,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
-import com.rivigo.zoom.datastore.constants.YoutubeConstants;
+import com.rivigo.zoom.datastore.constants.FamPayYoutubeConstants;
 import com.rivigo.zoom.datastore.service.YoutubeService;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -25,18 +25,18 @@ public class YoutubeServiceImpl implements YoutubeService {
     try {
       YouTube youtubeService = getService();
       YouTube.Search.List request =
-          youtubeService.search().list(YoutubeConstants.SNINPPET_PART_LIST);
+          youtubeService.search().list(FamPayYoutubeConstants.SNINPPET_PART_LIST);
       response =
           request
-              .setKey(YoutubeConstants.getDeveloperKey())
-              .setOrder(YoutubeConstants.DATE_KEY)
+              .setKey(FamPayYoutubeConstants.getDeveloperKey())
+              .setOrder(FamPayYoutubeConstants.DATE_KEY)
               .setPublishedAfter(
                   lastRunDateTime == null
-                      ? YoutubeConstants.DEFAULT_PUBLISHED_AFTER
+                      ? FamPayYoutubeConstants.DEFAULT_PUBLISHED_AFTER
                       : lastRunDateTime)
-              .setQ(query == null ? YoutubeConstants.DEFAULT_QUERY : query)
-              .setType(YoutubeConstants.TYPE_VIDEO_LSIT)
-              .setMaxResults(YoutubeConstants.DEFAULT_MAX_RESULTS)
+              .setQ(query == null ? FamPayYoutubeConstants.DEFAULT_QUERY : query)
+              .setType(FamPayYoutubeConstants.TYPE_VIDEO_LSIT)
+              .setMaxResults(FamPayYoutubeConstants.DEFAULT_MAX_RESULTS)
               .execute();
       log.info("The response from youtube api is {}", response.toString());
     } catch (GeneralSecurityException | IOException i) {
@@ -55,8 +55,8 @@ public class YoutubeServiceImpl implements YoutubeService {
    */
   public static YouTube getService() throws GeneralSecurityException, IOException {
     final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-    return new YouTube.Builder(httpTransport, YoutubeConstants.JSON_FACTORY, null)
-        .setApplicationName(YoutubeConstants.getApplicationName())
+    return new YouTube.Builder(httpTransport, FamPayYoutubeConstants.JSON_FACTORY, null)
+        .setApplicationName(FamPayYoutubeConstants.getApplicationName())
         .build();
   }
 }
