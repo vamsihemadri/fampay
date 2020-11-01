@@ -1,6 +1,7 @@
 package com.rivigo.zoom.datastore;
 
 import com.rivigo.zoom.datastore.config.WebConfig;
+import com.rivigo.zoom.datastore.service.InitService;
 import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -25,5 +26,8 @@ public class Application {
     for (String beanName : beanNames) {
       log.debug("Beans initialized by spring boot {}", beanName);
     }
+    final InitService initService = ctx.getBean(InitService.class);
+    initService.initialiseApplication();
+    ;
   }
 }

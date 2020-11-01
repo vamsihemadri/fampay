@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/hello")
 public class HelloController {
 
-  @GetMapping("/")
+  @GetMapping("/world")
   public String home() {
-    return "Hello Spring Boot with Docker";
+    return "Hello there. Spring Boot with Docker is what I am.";
   }
 }

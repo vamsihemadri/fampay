@@ -8,10 +8,8 @@ This project is a `gradle` based spring boot application. It uses [JDBI](http://
 
 **Quick Setup:** The project is on docker and can be run with below commands:
 
-* Build docker image: `docker build --rm -t zoom-datastore . [--build-arg key=value]`. The following build-args are supported:
-    * `PROPERTIES_PATH`: path of directory to read *application.properties* and *flyway.properties*. The path must be in the build context. Use tmp directory to copy file(s) which are not in context. Default: src/main/resources
-    
-    
+* Build docker image: `docker build --rm -t zoom-datastore . `. The following build-args are supported:
+            
 * Run docker container: `docker run -p 8080:8080 zoom-datastore` 
 
 **Gradle Wrapper** The project uses gradle wrapper:
@@ -31,5 +29,18 @@ This project is a `gradle` based spring boot application. It uses [JDBI](http://
 **Custom tasks:** The following custom tasks have been added to maintain code quality:
 
 * `gitExecutableHooks`: It is run before `processResources` and installs pre-push git hook. The pre-push hook validates code formatting apart from verifying that it is a clean build.
+
+**GET API CURL:**
+* `curl -X GET \
+     'http://localhost:8080/fampay/getLatestVideos?pageSize=2&pageNumber=2' \
+     -H 'Postman-Token: df009695-14c2-440f-92fc-0705499bc467' \
+     -H 'cache-control: no-cache'`
+     
+     
+** SEARCH API CURLL**
+* `curl -X GET \
+     'http://localhost:8080/fampay/searchVideos?query=elect' \
+     -H 'Postman-Token: 1bad79c5-1a91-4801-9c9f-2a34315cb804' \
+     -H 'cache-control: no-cache'`
 
 
