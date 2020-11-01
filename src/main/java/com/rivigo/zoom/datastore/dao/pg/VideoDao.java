@@ -91,7 +91,8 @@ public interface VideoDao extends AbstractDao<Video> {
           + "channel_name, "
           + "thumb_nails_metadata "
           + "from videos "
-          + "where title like :query% "
+          + "where title like '%' || :query || '%' "
+          + "OR description like '%' || :query || '%' "
           + "limit :pageSize ")
   /** @param query is non null */
   List<Video> getVideosByTitleOrDescription(
