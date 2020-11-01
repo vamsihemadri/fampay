@@ -9,9 +9,9 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class FamPayYoutubeConstants {
 
-  private static final String DEVELOPER_KEY = "AIzaSyBPGAp_bPaTqCL0Xwq06HrjMZb9j9Ka8QA";
+  private static final String DEVELOPER_KEY = "AIzaSyBBnbjp5PbBeJsRfH02LhnZ482qcquvztk";
 
-  private static final String APPLICATION_NAME = "youtube-videos-294306";
+  private static final String APPLICATION_NAME = "youtube-api-second-294317";
 
   public static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 

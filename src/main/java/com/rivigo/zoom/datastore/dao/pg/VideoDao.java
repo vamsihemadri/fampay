@@ -62,12 +62,38 @@ public interface VideoDao extends AbstractDao<Video> {
           + "id = :id ")
   Optional<Video> findById(@Bind("id") Long id);
 
-  @SqlQuery()
-  /** here pageNumber and pageSize are guaranteed to be non null; */
+  @SqlQuery(
+      "select id, "
+          + "title, "
+          + "description, "
+          + "published_at, "
+          + "youtube_video_id, "
+          + "youtube_channel_id, "
+          + "channel_name, "
+          + "thumb_nails_metadata "
+          + "from videos "
+          + "order by published_at desc "
+          + "offset :offset limit :pageSize ")
+  /**
+   * @param offset is non null
+   * @param pageSize is non null
+   */
   List<Video> getByPageNumberAndPageSize(
-      @BindBean("pageNumber") Integer pageNumber, @BindBean("pageSize") Integer pageSize);
+      @Bind("offset") Integer offset, @Bind("pageSize") Integer pageSize);
 
-  @SqlQuery()
-  /** query is non null */
-  List<Video> getVideosByTitleOrDescription(@BindBean("query") String query);
+  @SqlQuery(
+      "select "
+          + "title, "
+          + "description, "
+          + "published_at, "
+          + "youtube_video_id, "
+          + "youtube_channel_id, "
+          + "channel_name, "
+          + "thumb_nails_metadata "
+          + "from videos "
+          + "where title like :query% "
+          + "limit :pageSize ")
+  /** @param query is non null */
+  List<Video> getVideosByTitleOrDescription(
+      @Bind("query") String query, @Bind("pageSize") Integer pageSize);
 }

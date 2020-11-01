@@ -9,5 +9,5 @@ public interface VideoService {
 
   List<Video> getVideoDetails(Integer pageNumber, Integer pageSize);
 
-  List<Video> searchVideoByTitleOrDescription(String query);
+  List<Video> searchVideoByTitleOrDescription(String query, Integer pageSize);
 }

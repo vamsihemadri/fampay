@@ -24,7 +24,9 @@ public class YoutubeLocalDatastoreController {
   }
 
   @GetMapping("/searchVideos")
-  public List<Video> searchVideos(@RequestParam(required = true) @NonNull String query) {
-    return videoService.searchVideoByTitleOrDescription(query);
+  public List<Video> searchVideos(
+      @RequestParam(required = true) @NonNull String query,
+      @RequestParam(required = false) Integer pageSize) {
+    return videoService.searchVideoByTitleOrDescription(query, pageSize);
   }
 }

@@ -39,15 +39,16 @@ public class VideoServiceImpl implements VideoService {
     }
     try (Handle handle = readDbiBean.open()) {
       VideoDao videoDao = handle.attach(VideoDao.class);
-      return videoDao.getByPageNumberAndPageSize(pageNumber, pageSize);
+      return videoDao.getByPageNumberAndPageSize(pageNumber * pageSize, pageSize);
     }
   }
 
   @Override
-  public List<Video> searchVideoByTitleOrDescription(@NonNull String query) {
+  public List<Video> searchVideoByTitleOrDescription(@NonNull String query, Integer pageSize) {
     try (Handle handle = readDbiBean.open()) {
       VideoDao videoDao = handle.attach(VideoDao.class);
-      return videoDao.getVideosByTitleOrDescription(query);
+      return videoDao.getVideosByTitleOrDescription(
+          query, pageSize == null ? FamPayYoutubeConstants.DEFAULT_PAGE_SIZE : pageSize);
     }
   }
 }
