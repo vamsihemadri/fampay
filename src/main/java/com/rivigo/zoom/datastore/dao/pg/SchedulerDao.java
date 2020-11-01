@@ -11,7 +11,7 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 public interface SchedulerDao extends AbstractDao<Schedule> {
 
   @SqlQuery(
-      "select " + "id " + "name " + "last_successful_run" + "from schedules where name = :name")
+      "select " + "id, " + "name, " + "last_successful_run, " + "from schedules where name = :name")
   Optional<Schedule> findByName(@Bind("name") String name);
 
   @SqlQuery("" + "")
