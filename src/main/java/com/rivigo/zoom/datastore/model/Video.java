@@ -26,5 +26,8 @@ public class Video extends AbstractModel {
   // the video id according to youtube api.
   @NotBlank private String youtubeVideoId;
 
+  private String youtubeChannelId;
+  private String channelName;
+
   private String thumbNailsMetadata;
 }
