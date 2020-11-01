@@ -12,6 +12,9 @@ This project is a `gradle` based spring boot application. It uses [JDBI](http://
             
 * Run docker container: `docker run -p 8080:8080 zoom-datastore` 
 
+**POSTGRES**
+* Docker assumes postgres to be running on the host machine on the port `5432`.
+
 **Gradle Wrapper** The project uses gradle wrapper:
 
 * To update gradle wrapper version, update the version in `wrapper` section in `build.gradle` and run `gradle wrapper`
