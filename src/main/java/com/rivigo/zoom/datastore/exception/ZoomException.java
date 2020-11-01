@@ -1,6 +1,5 @@
 package com.rivigo.zoom.datastore.exception;
 
-/** Created by chiragbansal on 29/07/18. */
 public class ZoomException extends RuntimeException {
 
   private static final long serialVersionUID = 1L;

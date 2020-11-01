@@ -24,7 +24,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-/** Created by chiragbansal on 07/05/18. */
 @Configuration
 public class ZoomDatastoreConfig {
 
