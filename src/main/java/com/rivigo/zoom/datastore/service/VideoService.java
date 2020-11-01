@@ -8,4 +8,6 @@ public interface VideoService {
   List<Video> saveAll(List<Video> videos);
 
   List<Video> getVideoDetails(Integer pageNumber, Integer pageSize);
+
+  List<Video> searchVideoByTitleOrDescription(String query);
 }

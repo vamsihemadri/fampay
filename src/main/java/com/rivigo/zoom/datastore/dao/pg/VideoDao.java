@@ -63,9 +63,11 @@ public interface VideoDao extends AbstractDao<Video> {
   Optional<Video> findById(@Bind("id") Long id);
 
   @SqlQuery()
-  /*
-  here pageNumber and pageSize are guaranteed to be non null;
-   */
+  /** here pageNumber and pageSize are guaranteed to be non null; */
   List<Video> getByPageNumberAndPageSize(
       @BindBean("pageNumber") Integer pageNumber, @BindBean("pageSize") Integer pageSize);
+
+  @SqlQuery()
+  /** query is non null */
+  List<Video> getVideosByTitleOrDescription(@BindBean("query") String query);
 }

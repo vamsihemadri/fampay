@@ -7,6 +7,7 @@ import com.rivigo.zoom.datastore.service.VideoService;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import lombok.NonNull;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,14 @@ public class VideoServiceImpl implements VideoService {
     try (Handle handle = readDbiBean.open()) {
       VideoDao videoDao = handle.attach(VideoDao.class);
       return videoDao.getByPageNumberAndPageSize(pageNumber, pageSize);
+    }
+  }
+
+  @Override
+  public List<Video> searchVideoByTitleOrDescription(@NonNull String query) {
+    try (Handle handle = readDbiBean.open()) {
+      VideoDao videoDao = handle.attach(VideoDao.class);
+      return videoDao.getVideosByTitleOrDescription(query);
     }
   }
 }
